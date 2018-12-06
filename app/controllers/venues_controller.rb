@@ -7,7 +7,10 @@ class VenuesController < ApplicationController
       marker.lat venue.address_latitude
       marker.lng venue.address_longitude
       marker.infowindow "<h5><a href='/venues/#{venue.id}'>#{venue.created_at}</a></h5><small>#{venue.address_formatted_address}</small>"
+      
+      
 
+  
     end
 
     render("venues_templates/index.html.erb")
@@ -32,6 +35,13 @@ class VenuesController < ApplicationController
     @venue.name = params.fetch("name")
     @venue.address = params.fetch("address")
     @venue.neighborhood_id = params.fetch("neighborhood_id")
+    
+    url_safe_address = URI.encode(@venue.address)
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + url_safe_address.to_s + "&key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78"
+    parsed_data = JSON.parse(open(url).read)
+    
+    @venue.address_latitude = parsed_data.dig("results", 0, "geometry", "location", "lat")
+    @venue.address_longitude = parsed_data.dig("results", 0, "geometry", "location", "lng")
 
     save_status = @venue.save
 
@@ -61,6 +71,13 @@ class VenuesController < ApplicationController
     @venue.name = params.fetch("name")
     @venue.address = params.fetch("address")
     @venue.neighborhood_id = params.fetch("neighborhood_id")
+    
+    url_safe_address = URI.encode(@venue.address)
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + url_safe_address.to_s + "&key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78"
+    parsed_data = JSON.parse(open(url).read)
+    
+    @venue.address_latitude = parsed_data.dig("results", 0, "geometry", "location", "lat")
+    @venue.address_longitude = parsed_data.dig("results", 0, "geometry", "location", "lng")
 
     save_status = @venue.save
 
