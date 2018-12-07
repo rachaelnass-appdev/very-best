@@ -8,23 +8,19 @@
     <%= search_form_for @q, :class => "collapse", :id => "dishes_filters" do |f| %>
       <p class="lead">Narrow results:</p>
 
-  <div class="form-group">
-    <%= f.label :name_cont, "Name contains" %>
-    <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
-  </div>
-  
- <div class="form-group">
-    <f.label for="cuisine_id">Cuisine</label>
-      
-      <% @dishes.each do |dish| %>
-      <div class="form-group checkbox">
-            <label>
-              <input type="checkbox" name="cuisine_name" id="cuisine_name" value="cuisine">
-              <%= dish.cuisine.name %>
-            </label>
-          </div>
-      <% end %>
-</div>
+    <div class="form-group">
+      <%= f.label :name_cont, "Name contains" %>
+      <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Name contains" %>
+    </div>
+    
+    <div class="form-group">
+    <% Cuisine.all.each do |cuisine| %>
+      <label>
+        <%= check_box_tag('q[cuisine_id_eq_any][]', cuisine.id, (true if @q.cuisine_id_eq_any.try(:include?, cuisine.id))) %>
+        <%= cuisine.name %>
+      </label>
+    <% end %>
+    </div>
       
       <%= f.submit :class => "btn btn-primary btn-block mb-1" %>
 
