@@ -99,17 +99,7 @@
       </tr>
 
       <% @venues.each do |venue| %>
-      <tr>
-        <td>
-                  <a href="/venues/<%= venue.id %>"> <%= venue.name %> </a>
-        </td>
-        <td>
-       
-          <%= venue.neighborhood.name %>, <%= venue.neighborhood.city %>
-            </a>
-          <% end %>
-        </td>
-      </tr>
+      
       <% end %>
     </table>
     <%= paginate @venues, theme: 'twitter-bootstrap-4' %>
