@@ -39,7 +39,27 @@
       <% @dishes.each do |dish| %>
       <tr>
         <td><%= dish.name %></td>
-        <td><%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @dish.try(:venue_id)), :class => "form-control") %></td>
+        <td>
+          <form action="/create_bookmark" class="form-inline" method="post">
+            
+            <!-- Label and input for dish_id -->
+            <input type="hidden" name="dish_id" value="<%= dish.id %>">
+            
+            <!-- Label and input for user_id -->
+            <input type="hidden" name="user_id" value="<%= current_user.id %>">
+            
+            <!-- Label and input for venue_id -->
+            <label for="venue_id" class="control-label sr-only">
+              Venue
+            </label>
+            <%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @dish.try(:venue_id)), :class => "form-control") %>
+            
+            <button class="btn btn-primary btn-sm">
+               <i class="fa fa-heart"> 
+               </i>
+            </button>
+        </td>
+        
         <td>
           <% if dish.cuisine.present? %>
             <a href="/cuisines/<%= dish.cuisine.id %>">
