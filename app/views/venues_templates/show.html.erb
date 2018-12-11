@@ -5,15 +5,11 @@
 <div class="row">
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
-      <dd><%= @venue.name%></dd>
-      <dd>
-        <% if @venue.neighborhood.present? %>
+      <dd><%= @venue.name%>, <% if @venue.neighborhood.present? %>
           <a href="/neighborhoods/<%= @venue.neighborhood_id %>">
             <%= @venue.neighborhood.name %>
           </a>
-        <% end %>
-      </dd>
-      <dd><%= @venue.address%></dd>
+        <% end %>, <%= @venue.address%>
       
   <div class="row m-b-2">
   <div class="col-md-12">
@@ -44,9 +40,10 @@
   <div class="col-md-12">
     <ul class="list-group">
       <li class="list-group-item list-group-item-info">
-        Bookmarks
+        Dishes you loved here
       </li>
 
+      <% if @bookmark.user_id==current_user%>
       <% @venue.bookmarks.each do |bookmark| %>
         <li class="list-group-item">
           <a href="/bookmarks/<%= bookmark.id %>">
@@ -64,6 +61,7 @@
             </a>
           </div>
         </li>
+      <% end %>
       <% end %>
 
       <li class="list-group-item">
@@ -85,13 +83,7 @@
       <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <!-- Label and input for notes -->
-      <div class="form-group">
-        <label for="notes" class="control-label">
-          Notes
-        </label>
-
-        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"></textarea>
-      </div>
+      <input type="hidden" name="notes">
 
       <button class="btn btn-block btn-success">
         Create Bookmark
@@ -102,36 +94,6 @@
   </div>
 </div>
 
-<!-- A Venue has many fans -->
-
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Fans
-      </li>
-
-      <% @venue.fans.each do |user| %>
-        <li class="list-group-item">
-          <a href="/users/<%= user.id %>">
-            <%= user.username %>
-          </a>
-          <div class="btn-group btn-group-xs float-right">
-            <a href="/users/<%= user.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <a href="/users/<%= user.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_user/<%= user.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
 
 <!-- A Venue has many specialties -->
 
@@ -139,7 +101,7 @@
   <div class="col-md-12">
     <ul class="list-group">
       <li class="list-group-item list-group-item-info">
-        Specialties
+        Popular dishes
       </li>
 
       <% @venue.specialties.each do |dish| %>
