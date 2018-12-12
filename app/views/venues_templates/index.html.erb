@@ -35,7 +35,6 @@
        <h4 class="card-title">
           Places you've bookmarked
         </h4>
-       
     
       <tr>
           <div>
@@ -43,9 +42,9 @@
     </div>
   </div>
       </tr>
-
       <% @venues.each do |venue| %>
       <tr>
+
         <td> 
         <a href="/venues/<%= venue.id %>"> <%= venue.name %> </a>
         </td>
@@ -59,6 +58,7 @@
         </td>
       </tr>
       <% end %>
+   
     </table>
     <%= paginate @venues, theme: 'twitter-bootstrap-4' %>
   </div>
