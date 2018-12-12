@@ -38,33 +38,41 @@
 
       <% @dishes.each do |dish| %>
       <tr>
-        <td><a href="/dishes/<%=dish.id%>"><%= dish.name %></a></td>
+        <td>
+          <a href="/dishes/<%=dish.id%>"><%= dish.name %></a>
+        </td>
         
         <td>
-          <form action="/create_bookmark" class="form-inline" method="post">
-            
-            <!-- Hidden Label and input for dish_id -->
-            <input type="hidden" name="dish_id" value="<%= dish.id %>">
-            
-            <!-- Label and input for venue_id -->
-            <label for="venue_id" class="form-group control-label sr-only">
-              Venue
-            </label>
-            <%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @bookmark.try(:venue_id)), :class => "form-control form-control-sm mr-sm-1", :include_blank => "Choose a new venue...") %>
-            
-            <!-- Hidden Label and input for user_id -->
-            <input type="hidden" name="user_id" value="<%= current_user.id %>">
-            
-            <button class="form-group btn btn-primary btn-sm">
-               <i class="fa fa-heart"> 
-               </i>
-            </button>
-            
-            <!-- Hidden Label and input for notes -->
-            <input type="hidden" name="notes" value="">
-            
-          </form>
-          
+            <%if dish.bookmarks.present?%>
+              <a href="/venues/<%= dish.bookmarks.last.venue_id %>">
+                <%=Venue.find(dish.bookmarks.last.venue_id).name%>
+              </a>
+            <%else%> 
+              <form action="/create_bookmark" class="form-inline" method="post">
+                
+                <!-- Hidden Label and input for dish_id -->
+                <input type="hidden" name="dish_id" value="<%= dish.id %>">
+                
+                <!-- Label and input for venue_id -->
+                <label for="venue_id" class="form-group control-label sr-only">
+                  Venue
+                </label>
+                <%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @bookmark.try(:venue_id)), :class => "form-control form-control-sm mr-sm-1", :include_blank => "Choose a new venue...") %>
+                
+                <!-- Hidden Label and input for user_id -->
+                <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                
+                <button class="form-group btn btn-primary btn-sm">
+                   <i class="fa fa-heart"> 
+                   </i>
+                </button>
+                
+                <!-- Hidden Label and input for notes -->
+                <input type="hidden" name="notes" value="">
+              
+              </form>
+           
+          <% end %>
         </td>
         
         <td>
