@@ -2,9 +2,6 @@
 <div class="col-md-6">
 <div class="card">
   <h4 class="card-title">You loved <%= @dish.name %> at... </h4>
-  
-  
-
 
       <dd>
         <% if @dish.cuisine.present? %>
@@ -13,6 +10,14 @@
           </a>
         <% end %>
       </dd>
+
+      <% @dish.bookmarks.each do |bookmark| %>
+        <%if bookmark.dish_id==@dish.id && bookmark.user_id==current_user.id%>
+          <a href="/venues/<%= bookmark.venue_id %>">
+            <%= Venue.find(bookmark.venue_id).name %>
+          </a>
+        <%end%>
+      <%end%>
 
 
 
@@ -25,17 +30,17 @@
         <label for="venue_id" class="control-label">
         </label>
 
-        <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name), :class => "form-control") %>
+        <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name), :class => "form-control", :include_blank => "Choose a new venue...") %>
       </div>
 
       <!-- Label and input for user_id -->
       <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
-
-        
         <button class="btn btn-primary btn">
-              <i class="fa fa-heart"></i>
-              </button>
+          <i class="fa fa-heart"></i>
+        </button>
+        
+      <a href="/dishes">Back</a>  
     </div>
    </div>
 
