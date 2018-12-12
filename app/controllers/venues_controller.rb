@@ -15,8 +15,9 @@ class VenuesController < ApplicationController
   end
 
   def show
-    @bookmark = Bookmark.new
+    #@bookmark = Bookmark.new
     @venue = Venue.find(params.fetch("id"))
+
     
     url_safe_address = URI.encode(@venue.address)
     url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + url_safe_address.to_s + "&key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78"
