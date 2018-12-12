@@ -39,6 +39,7 @@
       <% @dishes.each do |dish| %>
       <tr>
         <td><a href="/dishes/<%=dish.id%>"><%= dish.name %></a></td>
+        
         <td>
           <form action="/create_bookmark" class="form-inline" method="post">
             
@@ -49,7 +50,7 @@
             <label for="venue_id" class="form-group control-label sr-only">
               Venue
             </label>
-            <%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @bookmark.try(:venue_id)), :class => "form-control form-control-sm mr-sm-1") %>
+            <%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @bookmark.try(:venue_id)), :class => "form-control form-control-sm mr-sm-1", :include_blank => "Choose a new venue...") %>
             
             <!-- Hidden Label and input for user_id -->
             <input type="hidden" name="user_id" value="<%= current_user.id %>">
@@ -61,7 +62,9 @@
             
             <!-- Hidden Label and input for notes -->
             <input type="hidden" name="notes" value="">
+            
           </form>
+          
         </td>
         
         <td>
@@ -78,7 +81,7 @@
   </div>
   
   <div class="col-md-3">
-    <a href="/venues/new" class="btn btn-lg btn-success">Add a new venue</a>
+    <a href="/venues/new" class="btn btn-block btn-success">Add a new venue</a>
   </div>
   
 </div>
