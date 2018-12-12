@@ -1,34 +1,35 @@
 <div class="container mt-4">
-<div class="col-md-6">
-<div class="card">
-  <h4 class="card-title">You loved <%= @dish.name %> at... </h4>
 
-      <dd>
+    <div class="row mt-2 justify-content-md-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">
+          
+      You loved <%= @dish.name %> at....
+      <div class="badge badge-primary float-right">
         <% if @dish.cuisine.present? %>
           <a href="/cuisines/<%= @dish.cuisine_id %>">
             <%= @dish.cuisine.name %>
           </a>
         <% end %>
-      </dd>
-
-      <% @dish.bookmarks.each do |bookmark| %>
-        <%if bookmark.dish_id==@dish.id && bookmark.user_id==current_user.id%>
-          <a href="/venues/<%= bookmark.venue_id %>">
-            <%= Venue.find(bookmark.venue_id).name %>
-          </a>
-        <%end%>
-      <%end%>
-
-
-
-
+    </div>
+    </h4>
+    </div>
+    
+    <ul class="list-group">
+        <li class="list-group-item">
+    <form action="/create_bookmark" class="form-inline float-left" method="post">
       <!-- Label and input for dish_id -->
       <input type="hidden" name="dish_id" value="<%= @dish.id %>">
+      
 
       <!-- Label and input for venue_id -->
       <div class="form-group">
         <label for="venue_id" class="control-label">
         </label>
+        
+      <input type="hidden" name="notes">
 
         <%= select_tag(:venue_id, options_from_collection_for_select(Venue.all, :id, :name), :class => "form-control", :include_blank => "Choose a new venue...") %>
       </div>
@@ -39,8 +40,22 @@
         <button class="btn btn-primary btn">
           <i class="fa fa-heart"></i>
         </button>
-        
-      <a href="/dishes">Back</a>  
+      </form>
+      <a class="form-inline float-right" href="/dishes">Back</a>  
+
+
+      <% @dish.bookmarks.each do |bookmark| %>
+        <%if bookmark.dish_id==@dish.id && bookmark.user_id==current_user.id%>
+          <li class="list-group-item">
+          <a href="/venues/<%= bookmark.venue_id %>">
+            <%= Venue.find(bookmark.venue_id).name %>
+          </a>
+          <%= bookmark.created_at %> [move right]
+        <%end%>
+      </li>
+      <%end%>
     </div>
-   </div>
+
+
+      
 
