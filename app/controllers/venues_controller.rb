@@ -19,6 +19,13 @@ class VenuesController < ApplicationController
   def show
     @bookmark = Bookmark.new
     @venue = Venue.find(params.fetch("id"))
+    
+    url_safe_address = URI.encode(@venue.address)
+    url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + url_safe_address.to_s + "&key=AIzaSyA5qwIlcKjijP_Ptmv46mk4cCjuWhSzS78"
+    parsed_data = JSON.parse(open(url).read)
+    
+    @venue.address_latitude = parsed_data.dig("results", 0, "geometry", "location", "lat")
+    @venue.address_longitude = parsed_data.dig("results", 0, "geometry", "location", "lng")
 
     render("venues_templates/show.html.erb")
   end
