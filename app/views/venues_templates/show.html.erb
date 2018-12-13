@@ -43,8 +43,8 @@
         Dishes you loved here
       </li>
 
-      <% if @bookmark.user_id==current_user%>
         <% @venue.bookmarks.each do |bookmark| %>
+        <%if bookmark.venue_id==@venue.id && bookmark.user_id==current_user.id%>
           <li class="list-group-item">
             
             <a href="/venues/<%= bookmark.venue_id %>">
@@ -66,7 +66,7 @@
             </a>
           </div>
         </li>
-      <% end %>
+        <% end %>
       <% end %>
 
       <li class="list-group-item">
