@@ -24,7 +24,7 @@
             Dishes you loved here
           </li>
           
-          <% @venue.bookmarks.each do |bookmark| %>
+          <% @venue.bookmarks.sort_by {|hash| hash['created_at']}.reverse.each do |bookmark| %>
             <%if bookmark.venue_id==@venue.id && bookmark.user_id==current_user.id%>
               <li class="list-group-item">
                 <p>
