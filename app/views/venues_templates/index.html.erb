@@ -39,12 +39,14 @@
           </h4>
       
         <tr>
-            <div>
+          
+    
+      <div>
         <div id="location_map" style="height: 480px;"></div>
       </div>
     
         </tr>
-        <% @venues.each do |venue| %>
+        <% @venues.sort_by {|hash| hash['name']}.each do |venue| %>
         <tr>
   
           <td> 
