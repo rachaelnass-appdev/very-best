@@ -53,13 +53,13 @@
               
               <%else%> 
                 
-                <form action="/create_bookmark" class="form-inline" method="post">
+                <form action="/create_bookmark" class="form-inline " method="post">
                   
                   <!-- Hidden Label and input for dish_id -->
                   <input type="hidden" name="dish_id" value="<%= dish.id %>">
                   
                   <!-- Label and input for venue_id -->
-                  <label for="venue_id" class="form-group control-label sr-only">
+                  <label for="venue_id" class="control-label sr-only">
                     Venue
                   </label>
                   <%= select_tag("venue_id", options_from_collection_for_select(Venue.all, :id, :name, @bookmark.try(:venue_id)), :class => "form-control form-control-sm mr-sm-1", :include_blank => "Choose a venue...") %>
