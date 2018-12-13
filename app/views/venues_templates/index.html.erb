@@ -44,7 +44,7 @@
       </div>
     
         </tr>
-        <% @venues.each do |venue| %>
+        <% @venues.sort_by {|hash| hash['name']}.each do |venue| %>
         <tr>
   
           <td> 
