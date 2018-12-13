@@ -51,7 +51,9 @@
         </li>
         
         <% @dish.bookmarks.sort_by {|hash| hash['created_at']}.reverse.each do |bookmark| %>
+
         <li class="list-group-item">
+
             <%if bookmark.dish_id==@dish.id && bookmark.user_id==current_user.id%>
               <p>
                 <a href="/venues/<%= bookmark.venue_id %>">
@@ -71,8 +73,8 @@
                   
                  </small>
               </p>
-            <%end%>
         </li>  
+        <%end%>
         <%end%>
         
       </ul>  
